@@ -58,6 +58,16 @@ module.exports = function(grunt) {
     },
 
     cssmin: {
+      miniwheats: {
+        files: [{
+          expand: true,
+          cwd: 'public',
+          src: ['*.css'],
+          dest: 'public/dist/',
+          ext: '.min.css'
+        }]
+      }
+  
     },
 
     watch: {
@@ -67,8 +77,7 @@ module.exports = function(grunt) {
           'public/lib/**/*.js',
         ],
         tasks: [
-          'concat',
-          'uglify'
+          'build'
         ]
       },
       css: {
@@ -93,7 +102,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-git');
 
-  grunt.registerTask('lucious', ['eslint', 'concat', 'uglify']);
+  //grunt.registerTask('miniwheats', ['cssmin']);
 
 
   ////////////////////////////////////////////////////
@@ -101,27 +110,37 @@ module.exports = function(grunt) {
   ////////////////////////////////////////////////////
 
   grunt.registerTask('server-dev', function (target) {
-    grunt.task.run([ 'nodemon', 'watch' ]);
+    grunt.task.run([ 'nodemon', 'watch']);
   });
 
   grunt.registerTask('test', [
+    'eslint',
     'mochaTest'
   ]);
 
-  grunt.registerTask('build', ['concat', 'uglify'
-  ]);
+  grunt.registerTask('luscious', ['livePush']);
+
+  grunt.registerTask('build', function(n) {
+    grunt.log.write('hello world');
+    grunt.task.run(['concat', 'uglify', 'cssmin']);
+  });
 
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
       // add your production server task here
+      grunt.log.write('hello world');
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
   });
 
-  grunt.registerTask('deploy', [
+  grunt.registerTask('deploy', function(n) {
     // add your deploy tasks here
-  ]);
-
+    if (grunt.option('prod')) {
+      grunt.task.run([ 'luscious']);
+    } else {
+      grunt.task.run([ 'test', 'build']);
+    }
+  });
 
 };
