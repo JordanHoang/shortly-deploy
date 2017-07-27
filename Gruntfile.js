@@ -7,8 +7,8 @@ module.exports = function(grunt) {
         separator: ';',
       },
       dist: {
-        src: ['public/client/*.js'],
-        dest: 'public/dist/clientmin.js',
+        src: ['public/client/**/*.js', 'public/lib/**/*.js'],
+        dest: 'public/dist/clientconcat.js',
       }, 
     
     },
@@ -25,7 +25,7 @@ module.exports = function(grunt) {
     },
 
     mochaTest: {
-      test: {
+      cocoapuffs: {
         options: {
           reporter: 'spec'
         },
@@ -39,12 +39,21 @@ module.exports = function(grunt) {
       }
     },
 
-    fuglify: {
+    uglify: {
+
+      //fuglify stuff here
+      captainCrunch: {
+        files: {
+          'public/dist/clientmin.js': ['public/dist/clientconcat.js']
+        }
+      }
+
     },
 
     eslint: {
-      target: [
-        // Add list of files to lint here
+      chexmix: [
+        'app/**/*.js', 'lib/*.js', 'public/**/*.js',
+        'test/*.js', 'server.js', 'server-config'
       ]
     },
 
@@ -84,21 +93,22 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-git');
 
-  grunt.registerTask('lp', ['livePush']);
+  grunt.registerTask('lucious', ['eslint', 'concat', 'uglify']);
 
-  grunt.registerTask('server-dev', function (target) {
-    grunt.task.run([ 'nodemon', 'watch' ]);
-  });
 
   ////////////////////////////////////////////////////
   // Main grunt tasks
   ////////////////////////////////////////////////////
 
+  grunt.registerTask('server-dev', function (target) {
+    grunt.task.run([ 'nodemon', 'watch' ]);
+  });
+
   grunt.registerTask('test', [
     'mochaTest'
   ]);
 
-  grunt.registerTask('build', ['concat', 'fuglify'
+  grunt.registerTask('build', ['concat', 'uglify'
   ]);
 
   grunt.registerTask('upload', function(n) {
