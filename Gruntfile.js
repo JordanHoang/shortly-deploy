@@ -13,6 +13,20 @@ module.exports = function(grunt) {
     
     },
 
+<<<<<<< HEAD
+    livepush: {
+      gitpush: {
+        cereal: {
+          options: {
+            remote: 'origin',
+            branch: 'master'
+          }
+        }
+      } 
+    },
+
+=======
+>>>>>>> 4eb1b39158fce707e204f54d7fbc16559454e399
     mochaTest: {
       cocoapuffs: {
         options: {
@@ -29,7 +43,6 @@ module.exports = function(grunt) {
     },
 
     uglify: {
-
       //fuglify stuff here
       captainCrunch: {
         files: {
@@ -76,7 +89,11 @@ module.exports = function(grunt) {
     },
 
     shell: {
+<<<<<<< HEAD
+      prodServer: {
+=======
       puhpushitrealgood: {
+>>>>>>> 4eb1b39158fce707e204f54d7fbc16559454e399
         command: 'git push live master'
       }
     },
@@ -92,6 +109,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-git');
 
+<<<<<<< HEAD
+  //grunt.registerTask('miniwheats', ['cssmin']);
+
+
+  grunt.registerTask('push', ['shell']);
+=======
+>>>>>>> 4eb1b39158fce707e204f54d7fbc16559454e399
   ////////////////////////////////////////////////////
   // Main grunt tasks
   ////////////////////////////////////////////////////
@@ -105,15 +129,22 @@ module.exports = function(grunt) {
     'mochaTest'
   ]);
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 4eb1b39158fce707e204f54d7fbc16559454e399
   grunt.registerTask('build', function(n) {
-    grunt.log.write('hello world');
     grunt.task.run(['concat', 'uglify', 'cssmin']);
   });
 
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
       // add your production server task here
+<<<<<<< HEAD
+      grunt.log.
+=======
       grunt.task.run([ 'shell' ]);
+>>>>>>> 4eb1b39158fce707e204f54d7fbc16559454e399
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
