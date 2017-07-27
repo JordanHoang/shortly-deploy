@@ -3,6 +3,25 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
+      options: {
+        separator: ';',
+      },
+      dist: {
+        src: ['public/client/*.js'],
+        dest: 'public/dist/clientmin.js',
+      }, 
+    
+    },
+
+    livePush: {
+      gitpush: {
+        task: {
+          options: {
+            remote: 'live',
+            branch: 'master'
+          }
+        }
+      } 
     },
 
     mochaTest: {
@@ -20,7 +39,7 @@ module.exports = function(grunt) {
       }
     },
 
-    uglify: {
+    fuglify: {
     },
 
     eslint: {
@@ -63,6 +82,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-nodemon');
+  grunt.loadNpmTasks('grunt-git');
+
+  grunt.registerTask('lp', ['livePush']);
 
   grunt.registerTask('server-dev', function (target) {
     grunt.task.run([ 'nodemon', 'watch' ]);
@@ -76,7 +98,7 @@ module.exports = function(grunt) {
     'mochaTest'
   ]);
 
-  grunt.registerTask('build', [
+  grunt.registerTask('build', ['concat', 'fuglify'
   ]);
 
   grunt.registerTask('upload', function(n) {
