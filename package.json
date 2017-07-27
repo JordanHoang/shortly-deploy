@@ -12,7 +12,6 @@
     "start": "grunt build && grunt upload",
     "test": "grunt test",
     "lint": "eslint ./",
-    "prod": "grunt build && node server.js"
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
