@@ -13,17 +13,6 @@ module.exports = function(grunt) {
     
     },
 
-    livePush: {
-      gitpush: {
-        task: {
-          options: {
-            remote: 'live',
-            branch: 'master'
-          }
-        }
-      } 
-    },
-
     mochaTest: {
       cocoapuffs: {
         options: {
@@ -87,7 +76,8 @@ module.exports = function(grunt) {
     },
 
     shell: {
-      prodServer: {
+      puhpushitrealgood: {
+        command: 'git push live master'
       }
     },
   });
@@ -101,6 +91,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-git');
+
 
   //grunt.registerTask('miniwheats', ['cssmin']);
 
@@ -118,8 +109,6 @@ module.exports = function(grunt) {
     'mochaTest'
   ]);
 
-  grunt.registerTask('luscious', ['livePush']);
-
   grunt.registerTask('build', function(n) {
     grunt.log.write('hello world');
     grunt.task.run(['concat', 'uglify', 'cssmin']);
@@ -128,7 +117,7 @@ module.exports = function(grunt) {
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
       // add your production server task here
-      grunt.log.write('hello world');
+      grunt.task.run([ 'shell' ]);
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
@@ -137,7 +126,7 @@ module.exports = function(grunt) {
   grunt.registerTask('deploy', function(n) {
     // add your deploy tasks here
     if (grunt.option('prod')) {
-      grunt.task.run([ 'luscious']);
+      grunt.task.run([ 'upload']);
     } else {
       grunt.task.run([ 'test', 'build']);
     }
